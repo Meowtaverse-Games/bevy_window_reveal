@@ -1,6 +1,11 @@
 use bevy::prelude::*;
 use bevy::window::{PrimaryWindow, WindowEvent};
 
+/// Configuration for the window reveal plugin.
+/// 
+/// - `frames_after_ready`: Number of frames to wait after the window is ready before revealing.
+/// - `ms_after_ready`: Number of milliseconds to wait after the window is ready before revealing.
+/// - `initial_clear`: Optional initial clear color for the window.
 #[derive(Resource, Clone)]
 pub struct WindowRevealConfig {
     pub frames_after_ready: u32,
@@ -18,6 +23,10 @@ impl Default for WindowRevealConfig {
     }
 }
 
+/// Bevy plugin for controlling the initial visibility of the primary window.
+/// 
+/// This plugin hides the window at startup and reveals it after a specified number of frames or milliseconds.
+/// It can also set the initial clear color.
 #[derive(Default)]
 pub struct WindowRevealPlugin(pub WindowRevealConfig);
 
@@ -54,6 +63,7 @@ impl Plugin for WindowRevealPlugin {
     }
 }
 
+/// System to hide the window at startup.
 fn startup(mut q_window: Query<&mut Window, With<PrimaryWindow>>) {
     if let Ok(mut w) = q_window.single_mut() {
         w.visible = false;
@@ -61,6 +71,7 @@ fn startup(mut q_window: Query<&mut Window, With<PrimaryWindow>>) {
     }
 }
 
+/// System to detect when the window is ready.
 fn catch_ready(mut ev: EventReader<WindowEvent>, mut state: ResMut<RevealState>) {
     if state.status == RevealStatus::NotReady && ev.read().next().is_some() {
         state.status = RevealStatus::Ready;
@@ -69,6 +80,7 @@ fn catch_ready(mut ev: EventReader<WindowEvent>, mut state: ResMut<RevealState>)
     }
 }
 
+/// System to accumulate frames and time after the window is ready.
 fn accumulate(time: Res<Time>, cfg: Res<WindowRevealConfig>, mut state: ResMut<RevealState>) {
     if state.status != RevealStatus::Ready {
         return;
@@ -79,6 +91,7 @@ fn accumulate(time: Res<Time>, cfg: Res<WindowRevealConfig>, mut state: ResMut<R
     }
 }
 
+/// System to reveal the window when the configured conditions are met.
 fn reveal_if_safe(
     cfg: Res<WindowRevealConfig>,
     mut state: ResMut<RevealState>,
