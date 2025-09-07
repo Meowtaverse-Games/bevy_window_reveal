@@ -3,6 +3,11 @@ name = "bevy_window_reveal"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
+authors = ["tokusei <tokusei@meowtaverse-games.com>"]
+homepage = "https://github.com/Meowtaverse-Games/bevy_window_reveal"
+keywords = ["bevy", "game", "window", "reveal"]
+description = "A Bevy plugin for controlling the initial visibility of the game window, allowing you to hide the window at startup and reveal it after a specified number of frames or milliseconds."
+repository = "https://github.com/Meowtaverse-Games/bevy_window_reveal.git"
 
 [dependencies]
 bevy = "0.16.1"
