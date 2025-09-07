@@ -1263,7 +1263,7 @@ dependencies = [
 
 [[package]]
 name = "bevy_window_reveal"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "bevy",
 ]

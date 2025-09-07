@@ -13,7 +13,7 @@ A Bevy plugin for controlling the initial visibility of the game window. This pl
 Add the following to your `Cargo.toml`:
 
 ```toml
-bevy_window_reveal = "0.1.0"
+bevy_window_reveal = "0.1.1"
 ```
 
 ## Usage
